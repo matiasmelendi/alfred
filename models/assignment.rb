@@ -5,7 +5,7 @@ class Assignment
 
   property :id, Serial
   property :name, String
-  property :files, String
-  property :test_script, String
   property :deadline, DateTime
+
+  remix n, 'Storage::File', :as => 'files'
 end
