@@ -69,6 +69,7 @@ module Alfred
       role.protect '/'
       role.allow   '/login'
       role.allow   '/register'
+      role.allow   '/health'
     end
 
     access_control.roles_for :teacher do |role|
