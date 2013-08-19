@@ -11,3 +11,7 @@ deploy:
   app: alfred-preview
   on:
     branch: develop
+after_script:
+  PADRINO_ENV=travis bundle exec rake integration
+  on:
+    branch: develop
