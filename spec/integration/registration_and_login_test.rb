@@ -2,7 +2,7 @@ require "selenium-webdriver"
 require "rspec"
 include RSpec::Expectations
 
-describe "LoginLogout" do
+describe "RegistrationAndLogin" do
 
   before(:each) do
     @driver = Selenium::WebDriver.for :firefox
@@ -17,14 +17,22 @@ describe "LoginLogout" do
     @verification_errors.should == []
   end
   
-  it "test_login_logout" do
+  it "test_registration_and_login" do
     @driver.get(@base_url + "/login")
-    @driver.find_element(:name, "email").send_keys "teacher@test.com"
+    @driver.find_element(:link, "crear cuenta").click
+    @driver.find_element(:id, "account_name").send_keys "juan"
+    @driver.find_element(:id, "account_surname").send_keys "perez"
+    @driver.find_element(:id, "account_buid").send_keys "78555"
+    @driver.find_element(:id, "account_email").send_keys "juan.perez@test.com"
+    @driver.find_element(:id, "account_tag").send_keys "mie"
+    @driver.find_element(:id, "account_password").send_keys "Passw0rd!"
+    @driver.find_element(:id, "account_password_confirmation").send_keys "Passw0rd!"
+    @driver.find_element(:css, "input.btn.btn-primary").click
+    element_present?(:xpath, "//body[@id='top']/div[2]/div/div").should be_true
+    @driver.find_element(:name, "email").send_keys "juan.perez@test.com"
     @driver.find_element(:name, "password").send_keys "Passw0rd!"
     @driver.find_element(:id, "sign_in").click
-    element_present?(:link, "teacher@test.com").should be_true
-    @driver.find_element(:id, "log_out_button").click
-    element_present?(:link, "Entrar").should be_true
+    element_present?(:link, "juan.perez@test.com").should be_true
   end
   
   def element_present?(how, what)

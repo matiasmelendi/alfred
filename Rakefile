@@ -24,7 +24,15 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
 	end
 
   require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:integration) do |t|
+  RSpec::Core::RakeTask.new(:integration_preview) do |t|
+    ENV['base_url'] = 'http://alfred-preview.herokuapp.com'
+    t.pattern = "./spec/integration/*_test.rb"
+    t.rspec_opts = %w(-fs --color)
+  end
+
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:integration_local) do |t|
+    ENV['base_url'] = 'http://127.0.0.1:3000'
     t.pattern = "./spec/integration/*_test.rb"
     t.rspec_opts = %w(-fs --color)
   end
