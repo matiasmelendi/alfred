@@ -23,5 +23,11 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
   	task.cucumber_opts = ["features"]
 	end
 
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:integration) do |t|
+    t.pattern = "./spec/integration/*_test.rb"
+    t.rspec_opts = %w(-fs --color)
+  end
+
 	task :default => [:travis]
 end
