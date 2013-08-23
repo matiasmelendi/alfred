@@ -98,6 +98,7 @@ es:
   not_available: 'No disponible'
   passed: 'Pruebas exitosas'
   failed: 'Pruebas fallaron'
+  undefined: 'Resultado indefinido'
   grading_report:
     course: 'Curso'
     shift: 'Turno'
