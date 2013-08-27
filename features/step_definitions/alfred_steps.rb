@@ -16,6 +16,7 @@ World(WithinHelpers)
 Given(/^the course "(.*?)"$/) do |course_name|
 	@course = Course.new
 	@course.name = course_name
+	@course.active =true
 	@course.save
 end
 
@@ -39,4 +40,16 @@ end
 
 Then(/^Log out menu option show be visible$/) do
   page.should have_content 'Salir'
+end
+
+When(/^I fill and submit then registration form$/) do
+  click_link 'crear cuenta'
+	fill_in(:account_name, :with => 'juan')
+	fill_in(:account_surname, :with => 'perez')
+	fill_in(:account_buid, :with => '78555')
+	fill_in(:account_email, :with =>'juan.perez@test.com')
+	fill_in(:account_tag, :with => 'mie')
+	fill_in(:account_password, :with => 'Passw0rd!')
+	fill_in(:account_password_confirmation, :with =>'Passw0rd!')
+	click_button 'save'
 end
