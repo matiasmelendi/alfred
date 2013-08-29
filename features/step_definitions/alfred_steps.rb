@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'uri'
 require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
@@ -38,6 +39,11 @@ Given(/^I am logged in as teacher$/) do
 	click_button :sign_in
 end
 
+
+Then(/^Students menu option show be visible$/) do
+  page.should have_content 'Alumnos'
+end
+
 Then(/^Log out menu option show be visible$/) do
   page.should have_content 'Salir'
 end
@@ -52,4 +58,20 @@ When(/^I fill and submit then registration form$/) do
 	fill_in(:account_password, :with => 'Passw0rd!')
 	fill_in(:account_password_confirmation, :with =>'Passw0rd!')
 	click_button 'save'
+end
+
+Then(/^Assignments menu option show be visible$/) do
+  page.should have_content 'Trabajos prácticos'
+end
+
+When(/^I create and "(.*?)" Assigment$/) do |assignment_name|
+  visit '/assignments/new?course_id=1'
+  fill_in(:assignment_name, :with => assignment_name)
+	fill_in(:assignment_deadline, :with => '29/08/2013')
+  click_button 'Guardar'
+end
+
+Then(/^I should see "(.*?)" in the assigments list$/) do |assignment_name|
+  visit '/courses/2013-1/assignments'
+  page.should have_content assignment_name
 end
