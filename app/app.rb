@@ -88,6 +88,7 @@ module Alfred
       role.allow   '/login'
       role.allow   '/register'
       role.allow   '/api'
+      role.allow   '/health'
     end
 
     access_control.roles_for :teacher do |role|
