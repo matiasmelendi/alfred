@@ -254,6 +254,9 @@ Then /^deberia ver "([^"]*)"$/ do |esperado|
     end
 end
 
+And /^I click "(.*)"$/ do |button_name|
+  click_button(button_name)
+end
 
 
 

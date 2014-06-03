@@ -9,7 +9,8 @@ Feature: Course enrollment
     And   I am logged in as student
     And   I go to the homepage
     And   I follow "aquí"
-    And   I enroll in '2015-01C'
+    And   I click on '2015-01C'
+    And   I click "Guardar"
     Then  I am enrolled in '2015-01C'
 
 
