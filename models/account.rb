@@ -57,6 +57,14 @@ class Account
     end
   end
 
+  def is_enrolled?(course)
+    self.courses.include?(course)
+  end
+
+  def enrolls(course)
+    courses << course unless (course.nil? or self.is_enrolled?(course) )
+  end
+
   def is_valid_tag?
     return true unless self.is_student?
 

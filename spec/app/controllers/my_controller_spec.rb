@@ -1,16 +1,14 @@
 require 'spec_helper'
 
 describe "MyController" do
-  let(:current_account) { Account.new(name: 'Jane', surname: 'Doe', buid: '1234', role: 'student', tag: 'mie') }
+  let!(:current_course) { Factories::Course.algorithm }
+  let(:current_account) { Factories::Account.student }
 
   before (:each) do
     Alfred::App.any_instance.stub(:current_account).and_return(current_account)
-    # Alfred::App.any_instance.stub(:current_course)
-    #   .and_return(Factories::Course.algorithm)
   end
 
   describe "get profile" do
-
     it "should render profile view" do
       Alfred::App.any_instance.should_receive(:render)
         .with('my/profile')
@@ -40,4 +38,27 @@ describe "MyController" do
     end
   end
 
-end
+  describe "course enrollment" do
+    let(:new_course) { Factories::Course.name( '2013-2c') }
+
+    describe "student is recurrent" do
+      it "should enroll student in a new course" do
+
+        expect(current_account.courses).not_to include( new_course )
+
+        put 'my/profile',                                               \
+          { "account"=>                                                 \
+              { "name"=>"student201314",                                \
+                "surname"=>"soy recursante",                            \
+                "tag"=>"mie",                                           \
+                "active_course"=> new_course.id                         \
+          }                                                             \
+        }
+
+        expect( current_account.is_enrolled?(current_course) ).to be true
+        expect( current_account.is_enrolled?(new_course) ).to be true
+
+      end
+    end
+  end
+end 

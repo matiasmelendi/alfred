@@ -83,6 +83,8 @@ Alfred::App.controllers :my do
 
 
   put :profile, :map => 'my/profile' do
+    @account = current_account
+
     # remove password values if not provided to avoid updating if not required
     account_params = params[:account]
     if (account_params['password'].blank? && account_params['password_confirmation'].blank?)
@@ -90,8 +92,10 @@ Alfred::App.controllers :my do
       account_params.delete('password_confirmation')
     end
 
-    @account = current_account
-    if @account.update(account_params)
+    active_course_id = account_params.delete( 'active_course' )
+    @account.enrolls( Course.find_by_id(active_course_id) ) 
+    
+    if @account.update(account_params) and @account.save
       flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
       redirect '/'
     else

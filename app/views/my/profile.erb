@@ -52,9 +52,26 @@
     </div>
   </fieldset>
 
+  <% if not @account.is_enrolled?(Course.active) %>
+  <fieldset id="course-set" class='control-group <%= error ? 'has-error' : ''%>'>
+    <label class='control-label'> <%= t(:active_course) %> </label>
+    <div class='controls'>
+      <%= f.check_box :active_course, :value => Course.active.id  %>
+      <span class='help-inline'>
+      <%= Course.active.name %>
+      <i class='icon-warning-sign course-warning' title='<%= t(:not_enrolled) %>'></i> 
+      </span>
+    </div>
+  </fieldset>
+  <% end %>
+
   <div class="form-actions">
     <%= f.submit t(:save), :class => 'btn btn-primary' %>
     &nbsp;
     <a href="/" class='btn'>Cancelar</a>
   </div>
+<% end %>
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag 'course_enrollment.js' %>
 <% end %>

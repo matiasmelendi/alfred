@@ -105,3 +105,15 @@ button.assign-to-me:hover {
   color:red;
 }
 
+/** 
+ * Profile stylesheet
+ */
+
+
+.course-warning {
+  color:#f0ad4e;
+}
+
+.hidden {
+  display:none !important;
+}

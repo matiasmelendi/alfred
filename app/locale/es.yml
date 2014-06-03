@@ -1,11 +1,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 es:
+  here: 'aquí'
   profile: 'perfil'
   registration: 'registración'
   name: 'nombre'
   surname: 'apellido'
   buid: 'padrón'
   tag: 'turno'
+  not_enrolled: 'No soy parte del curso'
+  join: 'Unirme'
+  active_course: 'Curso activo:'
   password: 'contraseña'
   password_confirmation: 'confirmación de contraseña'
   change_password: 'cambiar contraseña'

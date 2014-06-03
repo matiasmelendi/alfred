@@ -2,6 +2,25 @@ require 'spec_helper'
 
 describe Account do
 
+	describe "#is_enrolled?" do
+    it "should return true whether user is enrolled in a course" do
+      student = Factories::Account.student
+      course  = student.courses.first()
+
+      expect( student.is_enrolled?(course) ).to be true
+    end
+  end
+
+	describe "#enrolls?" do
+    it "should enroll a user in a course" do
+      student = Factories::Account.student
+      new_course = Factories::Course.name( 'new')
+
+      student.enrolls(new_course)
+      expect( student.is_enrolled?(new_course) ).to be true
+    end
+  end
+
 	describe 'is_student?' do
 
 		it 'should return true when is student' do
