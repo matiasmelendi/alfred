@@ -80,12 +80,12 @@ module Alfred
 
     #set :allow_disabled_csrf, true
 
-    set :login_page, "/login"
+    set :login_page, "/accounts/login"
 
     access_control.roles_for :any do |role|
       role.protect '/'
-      role.allow   '/login'
-      role.allow   '/register'
+      role.allow   '/accounts/login'
+      role.allow   '/accounts/register'
       role.allow   '/api'
       role.allow   '/health'
     end
@@ -107,54 +107,6 @@ module Alfred
 
     get '/' do
       render 'home/index'
-    end
-
-    get '/logout' do
-      set_current_account(nil)
-      set_current_course(nil)
-      redirect '/'
-    end
-
-    get :login do
-      render '/home/login'
-    end
-
-    post :login do
-      if account = Account.authenticate(params[:email], params[:password])
-        set_current_account(account)
-        if account.is_student? && account.is_enrolled?(Course.active)
-				  redirect_back_or_default("courses/#{current_course.name}/my/assigments")
-        else
-          redirect_back_or_default('/')
-        end
-
-      #elsif Padrino.env == :development && params[:bypass]
-      #  account = Account.first
-      #  set_current_account(account)
-      #  redirect url(:base, :index)
-      else
-        params[:email], params[:password] = h(params[:email]), h(params[:password])
-        flash[:error] = pat('login.error')
-        redirect url(:login)
-      end
-    end
-
-    get :register do
-      @title = pat(:new_title, :model => 'account')
-      @account = Account.new
-      render 'home/register'
-    end
-
-    post :register do
-      @account = Account.new_student(params[:account])
-      @account.courses << Course.active
-      if @account.save
-        flash[:success] = t(:account_created)
-        redirect('/login')
-      else
-        flash.now[:error] = t(:account_creation_error)
-        render 'home/register'
-      end
     end
 
     get :course, :map => 'courses/:course_id' do

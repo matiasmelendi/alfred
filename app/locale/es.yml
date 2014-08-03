@@ -31,6 +31,10 @@ es:
     all: 'ver todas las soluciones'
     upload_help: ''
   menu:
+    start: Inicio
+    profile: Perfil
+    login: Entrar
+    logout: Salir
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
     submissions: 'Mis entregas'

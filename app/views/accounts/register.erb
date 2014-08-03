@@ -1,6 +1,6 @@
 <h1><%= t(:registration).capitalize %></h1>
 <hr/>
-  <% form_for :account, url(:register), :class => 'form-horizontal' do |f| %>
+  <% form_for :account, url(:accounts, :register), :class => 'form-horizontal' do |f| %>
 
 <% error = @account.errors.key?(:name) && @account.errors[:name].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>

@@ -1,9 +1,6 @@
 require 'spec_helper'
 
-# It is not a real controller.  It spec files encapsulates a variety of
-# tests for app resourses
-#
-describe "AppController" do
+describe "AccountsController" do
   let(:student_name)      { 'Carles' }
   let(:student_surname)   { 'Darwin' }
   let(:student_buid)      { '00001' }
@@ -33,7 +30,7 @@ describe "AppController" do
       end
 
       it "should create a new student" do
-        post "/register", @new_student
+        post "/accounts/register", @new_student
 
         Account.all.size.should > 0
 
@@ -53,7 +50,7 @@ describe "AppController" do
       end
 
       it "should not create a new student" do
-        post "/register", @new_student
+        post "/accounts/register", @new_student
 
         Account.all.size.should == 0
       end

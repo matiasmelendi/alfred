@@ -71,7 +71,7 @@ end
 
 Then /^I log in as "(.*?)"$/ do |user_name|
   @account = Account.all( :name => user_name ).first
-  visit '/login'
+  visit '/accounts/login'
   fill_in(:email, :with => @account.email)
   fill_in(:password, :with => default_password)
   click_button :sign_in
@@ -88,7 +88,7 @@ Given /^I am logged in as teacher$/ do
 end
 
 Given /^I logged out$/ do
-  visit '/logout'
+  visit '/accounts/logout'
   @account = nil
 end
 

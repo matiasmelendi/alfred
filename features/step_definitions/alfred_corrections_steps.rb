@@ -50,7 +50,7 @@ And /^I click "Asignar a otro" on the last submission$/ do
   all(:xpath, "//a[@id='solution_teacher_assign_button']").last.click
 end
 
-And /^I click "(.*)" on last correction$/ do |action_name| 
+And /^I click "(.*)" on last correction$/ do |action_name|
   as_teacher_for_assignment( 'TP1', action_name ).click
 end
 
@@ -74,10 +74,10 @@ And /^Mail has been sent to student$/ do
   expect( mail.to ).to include( @student.email )
   expect( mail.from ).to include( @teacher.email )
   expect( mail.body ).to include(
-    "* Trabajo Practico: TP1", 
+    "* Trabajo Practico: TP1",
     "* Corrector: #{@teacher.name}, #{@teacher.email}",
     "* Calificacion: #{Correction.last.grade}",
-    "* Comentarios: #{Correction.last.public_comments}" 
+    "* Comentarios: #{Correction.last.public_comments}"
   )
 end
 
