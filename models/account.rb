@@ -7,15 +7,20 @@ class Account
   STUDENT = 'student'
   ADMIN = 'admin'
 
+  # Password reset request expiration in hours
+  PASSWORD_RESET_EXPIRATION = 48
+
   # Properties
-  property :id,               Serial
-  property :name,             String
-  property :surname,          String
-  property :buid,             String
-  property :email,            String
-  property :crypted_password, String, :length => 70
-  property :role,             String
-  property :tag,             String
+  property :id,                           Serial
+  property :name,                         String
+  property :surname,                      String
+  property :buid,                         String
+  property :email,                        String
+  property :crypted_password,             String, :length => 70
+  property :role,                         String
+  property :tag,                          String
+  property :reset_password_token,         String
+  property :reset_password_generated_at,  DateTime
   has n, :courses, :through => Resource
   has n, :solutions
 
@@ -170,7 +175,27 @@ class Account
    courses << course unless (course.nil? or self.is_enrolled?(course) )
   end
 
+  def reset_password
+    self.reset_password_token = generate_reset_password_token
+    self.reset_password_generated_at = DateTime.now
+    self.save
+  end
+
+  def set_new_password(token, new_password, new_password_confirmation)
+    errors.add(:base, I18n.t('account.errors.reset_password_token_does_not_match')) if self.reset_password_token != token
+    errors.add(:base, I18n.t('account.errors.reset_password_request_expired')) if self.reset_password_generated_at < (DateTime.now - PASSWORD_RESET_EXPIRATION)
+
+    if errors.empty?
+      self.password = new_password
+      self.password_confirmation = new_password_confirmation
+      clear_reset_password_token
+
+      save
+    end
+  end
+
   private
+
   def password_required
     crypted_password.blank? || password.present?
   end
@@ -184,5 +209,14 @@ class Account
     account.role = role
     account
   end
-  
+
+  def generate_reset_password_token
+    SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
+  end
+
+  def clear_reset_password_token
+    self.reset_password_token = nil
+    self.reset_password_generated_at = nil
+  end
+
 end

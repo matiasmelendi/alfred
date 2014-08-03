@@ -62,6 +62,14 @@ es:
       correction_unavailable: 'Corrección no disponible'
       correction_status: 'Estado de la corrección'
     test_result: 'Resultado pruebas'
+  accounts:
+    reset_password:
+      title: 'Resetear contraseña'
+      email: 'Email'
+      submit: 'Enviar'
+      cannot_find_account_with_email: 'No se pudo encontrar usuario con email %{email}'
+      email_required: 'Email requerido'
+      sent_on_email: 'Se han enviado las instrucciones vía email'
   corrections:
     title_all: 'Entregas para'
     edit: 'Corregir'
@@ -264,3 +272,5 @@ es:
   account:
     errors:
       biud: 'El padron es obligatorio'
+      reset_password_token_does_not_match: 'El token es inválido'
+      reset_password_request_expired: 'Se ha excedido el plazo máximo para resetear la contraseña. Por favor vuelva a solicitar un nuevo reseteo de contraseña.'

@@ -10,27 +10,28 @@ describe "AccountsController" do
   let(:course)            { Factories::Course.algorithm }
 
   describe "register" do
-    before do
-      @new_student = {
-        :account => {
-          :name => student_name,
-          :surname => student_surname,
-          :buid => student_buid,
-          :email => student_email,
-          :password => student_pass,
-          :password_confirmation => student_pass
-        }
-      }
+    let(:new_student) do
+      { account: {
+        :name => student_name,
+        :surname => student_surname,
+        :buid => student_buid,
+        :email => student_email,
+        :password => student_pass,
+        :password_confirmation => student_pass
+      } }
+    end
+
+    before :each do
       Course.stub(:active).and_return(course)
     end
 
     describe "student registers himself with a valid tag" do
       before do
-        @new_student[:account][:tag] = Account.valid_tags.first
+        new_student[:account][:tag] = Account.valid_tags.first
       end
 
       it "should create a new student" do
-        post "/accounts/register", @new_student
+        post "/accounts/register", new_student
 
         Account.all.size.should > 0
 
@@ -46,14 +47,62 @@ describe "AccountsController" do
 
     describe "student cannot register himself with an invalid tag" do
       before do
-        @new_student[:account][:tag] = '<invalid tag>'
+        new_student[:account][:tag] = '<invalid tag>'
       end
 
       it "should not create a new student" do
-        post "/accounts/register", @new_student
+        post "/accounts/register", new_student
 
         Account.all.size.should == 0
       end
+    end
+  end
+
+  describe 'reset_password' do
+    it "should redirect to root if user already signed in" do
+      Alfred::App.any_instance.stub(:current_account).and_return(double(role: 'student'))
+
+      get '/accounts/reset_password'
+
+      last_response.redirection?.should be_true
+      last_response.location.should == 'http://example.org/'
+    end
+
+    it "should redirect to root if user already signed in" do
+      Alfred::App.any_instance.stub(:current_account).and_return(double(role: 'student'))
+
+      post '/accounts/reset_password', account: {email: 'john@example.org'}
+
+      last_response.redirection?.should be_true
+      last_response.location.should == 'http://example.org/'
+    end
+
+    it "should display error if email missing" do
+      post '/accounts/reset_password'
+
+      last_response.body.should =~ /#{I18n.t('accounts.reset_password.email_required')}/
+    end
+
+    it "should display error if cannot find account with given email" do
+      post '/accounts/reset_password', account: {email: 'john@example.org'}
+
+      last_response.body.should =~ /#{I18n.t('accounts.reset_password.cannot_find_account_with_email', email: 'john@example.org')}/
+    end
+
+    it "should create reset token and send instructions via email" do
+      teacher = Factories::Account.teacher
+      teacher.reset_password_token.should be_nil
+      teacher.reset_password_generated_at.should be_nil
+
+      post '/accounts/reset_password', account: {email: teacher.email}
+
+      pending('Enviar link para setear nuevo password')
+
+      last_response.redirection?.should be_true
+      last_response.location.should == 'http://example.org/accounts/login'
+      teacher.reload
+      teacher.reset_password_token.should_not be_nil
+      teacher.reset_password_generated_at.should_not be_nil
     end
   end
 

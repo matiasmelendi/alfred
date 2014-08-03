@@ -86,6 +86,8 @@ module Alfred
       role.protect '/'
       role.allow   '/accounts/login'
       role.allow   '/accounts/register'
+      role.allow   '/accounts/reset_password'
+      role.allow   '/accounts/new_password'
       role.allow   '/api'
       role.allow   '/health'
     end

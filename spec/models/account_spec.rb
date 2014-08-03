@@ -283,4 +283,68 @@ describe Account do
       authenticated_account.should eq(account)
     end
   end
+
+  describe 'reset_password' do
+    let(:now) { DateTime.now }
+
+    it "should generate reset token" do
+      subject.should_receive(:save).and_return(true)
+
+      Timecop.freeze(now) do
+        subject.reset_password
+      end
+
+      subject.reset_password_token.should_not be_nil
+      subject.reset_password_generated_at.to_s.should == now.to_s # Need to convert to string to avoid precision issues when reading value from DB
+    end
+  end
+
+  describe 'set_new_password' do
+    let(:old_password) { 'the_old_password' }
+    let(:new_password) { 'my_new_password' }
+    let(:reset_token) { 'abc123' }
+
+    subject { Account.new(email: 'john@example.com', password: old_password, password_confirmation: old_password) }
+
+    before :each do
+      subject.send(:encrypt_password) # Force to set encrypted password
+
+      subject.reset_password_token = reset_token
+      subject.reset_password_generated_at = DateTime.now
+    end
+
+    it "should not update password if reset password token does not match" do
+      subject.set_new_password('xyz098', new_password, new_password).should be_false
+
+      subject.errors[:base].should include(I18n.t('account.errors.reset_password_token_does_not_match'))
+      subject.has_password?(new_password).should be_false
+    end
+
+    it "should not update password if reset request expired" do
+      subject.reset_password_generated_at = DateTime.now - Account::PASSWORD_RESET_EXPIRATION
+
+      subject.set_new_password(reset_token, new_password, new_password).should be_false
+
+      subject.errors[:base].should include(I18n.t('account.errors.reset_password_request_expired'))
+      subject.has_password?(new_password).should be_false
+    end
+
+    it "should not update password if password confirmation does not match" do
+      subject.set_new_password(reset_token, new_password, 'wrong_password_confirmation').should be_false
+
+      subject.valid?.should be_false
+      subject.errors[:password].should_not be_empty
+    end
+
+    it "should update password if reset request valid" do
+      subject.should_receive(:save).and_return(true)
+
+      subject.set_new_password(reset_token, new_password, new_password).should be_true
+
+      subject.send(:encrypt_password) # Force to set encrypted password
+      subject.has_password?(new_password).should be_true
+      subject.reset_password_token.should be_nil
+      subject.reset_password_generated_at.should be_nil
+    end
+  end
 end
