@@ -58,4 +58,27 @@ describe Correction do
     end
   end
 
+  describe 'validations' do
+
+    before(:each) do
+      @correction.teacher = Account.new
+      @correction.solution = Solution.new
+    end
+
+    it 'should not be valid without teacher' do
+      @correction.teacher = nil
+      @correction.valid?.should be_false
+    end
+
+    it 'should not be valid without solution' do
+      @correction.solution = nil
+      @correction.valid?.should be_false
+    end
+
+    it 'should not be valid when grade 11' do
+      @correction.grade = 11
+      @correction.valid?.should be_false
+    end
+    
+  end
 end
