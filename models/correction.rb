@@ -3,28 +3,20 @@ require 'dm-timestamps'
 class Correction
   include DataMapper::Resource
 
-	# Relations
 	belongs_to :solution
-
   # Teacher who ranks
   belongs_to :teacher, :model => Account
-
-  # property <name>, <type>
   property :id, Serial
   property :public_comments, Text
   property :private_comments, Text
   property :grade, Float
-  property :teacher_id, Integer
-  property :solution_id, Integer, :required => true, :unique => :solution
 	property :created_at, DateTime
   property :updated_at, DateTime
-	property :solution_id, 	Integer,
-		:required => true, :unique => :solution
 
-  validates_presence_of      :solution
-  validates_presence_of      :teacher
+  validates_presence_of   :solution
+  validates_presence_of   :teacher
   validates_within        :grade, :set => (0..10).to_a << nil
-  validates_with_method   :teacher, :is_a_teacher?
+  validates_with_method   :teacher, :is_author_a_teacher?
   validates_present       :teacher
   validates_present       :solution
 
@@ -50,12 +42,8 @@ class Correction
   end
 
   private
-  def is_a_teacher?
-    if @teacher
-      return true if @teacher.is_teacher?
-    end
-
-    return [ false, 'Only a teacher is able to correct' ]
+  def is_author_a_teacher?
+    @teacher && @teacher.is_teacher?
   end
 
 end
