@@ -19,6 +19,17 @@ When /^I fill in link to solution$/ do
   fill_in :solution_link, :with => "http://www.mysolution.com/solution_for_assignment"
 end
 
+When(/^due date for "(.*?)" passes$/) do |assignment_name|
+  pending
+end
+
+Then(/^student cannot submit a solution again for "(.*?)"$/) do |assignment_name|
+  pending
+end
+
+Then(/^student can submit a solution for "(.*?)"$/) do |assignment_name|
+  pending
+end
 
 Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
   expect( page.body ).to \
