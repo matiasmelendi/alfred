@@ -67,6 +67,7 @@ group :test do
 	gem 'rack-test', :require => 'rack/test'
 	gem 'vcr'
 	gem 'webmock'
+  gem 'timecop'
 end
 
 # Or Padrino Edge
