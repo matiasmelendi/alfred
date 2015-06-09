@@ -13,25 +13,37 @@
 
   <tbody>
 		<% @assignment_status.each do | as|%>
-		<tr>
+		<tr id="tr<%=as.name%>">
 			<td><%= as.name %></td>
 			<td><%= l as.deadline.to_date %></td>
 			<td><%= t(as.status) %></td>
 			<td><%= as.corrector_name %></td>
-			<td>
-				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('assignments.download_file').capitalize, :class => 'list-row-action-wrapper-link' do %>
-          <i class='icon-file'></i>
-        <% end %>
+			<td id="td<%=as.name%>">
+              <%- link_to :href => url(:assignment, :file, :download, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('assignments.download_file').capitalize, :class => 'list-row-action-wrapper-link' do %>
+                  <i class='icon-file'></i>
+              <% end %>
 
-				<%- link_to :href => url(:my, :new_solution, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.new').capitalize, :class => 'list-row-action-wrapper-link' do %>
-          <i class='icon-cloud-upload'></i>
-        <% end %>
+              <% if as.status == :solution_pending %>
+                  <% if as.deadline < Date.today  %>
+                      <%- link_to :href => url(:my, :new_solution, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.new').capitalize, :class => 'list-row-action-wrapper-link' do %>
+                          <i class='icon-cloud-upload' style="color:red;"></i>
+                      <% end %>
+                  <% else %>
+                      <%- link_to :href => url(:my, :new_solution, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.new').capitalize, :class => 'list-row-action-wrapper-link' do %>
+                          <i class='icon-cloud-upload'></i>
+                      <% end %>
+                  <%end %>
+              <% else %>
+                  <span class="list-row-action-wrapper-link" data-original-title="<%= t('solution.new').capitalize %>" title="" rel="tooltip">
+                    <i class='icon-cloud-upload'></i>
+                  </span>
+              <% end %>
 
-				<%- link_to :href => url(:my, :solutions, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.all').capitalize, :class => 'list-row-action-wrapper-link' do %>
-          <i class='icon-list'></i>
-        <% end %>
+              <%- link_to :href => url(:my, :solutions, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.all').capitalize, :class => 'list-row-action-wrapper-link' do %>
+                  <i class='icon-list'></i>
+              <% end %>
 
-			</td>
+            </td>
 		</tr>
 		<% end %>
   </tbody>

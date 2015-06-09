@@ -52,4 +52,50 @@ describe "MyController" do
     end    
   end
 
+    # describe "create solution" do
+    #
+    #   let(:assignment) { Assignment.create!(name: "TP0", deadline: Date.today) }
+    #
+    #   let(:params) do
+    #     { assignment_id: assignment.id, solution: { comments: [], link: "http://zaraza.com" } }
+    #   end
+    #
+    #   before :each do
+    #     Assignment.should_receive(:get).and_return(assignment)
+    #   end
+    #
+    #   context "when a submission date passes and student doesn't upload a solution" do
+    #
+    #     before :each do
+    #       #We do this because the content of my/new_solution.erb raises errors out of this context
+    #       Alfred::App.any_instance.should_receive(:render).with('my/new_solution').and_return("")
+    #       Timecop.freeze(Date.today + 30)
+    #     end
+    #
+    #     it "should allow students to upload a solution" do
+    #       post "/my/assignments/:assignment_id/solutions/create", params
+    #
+    #       last_response.should be_ok
+    #     end
+    #
+    #   end
+    #
+    #   context "there is a solution submitted and the student tries to upload another solution for the same assignment" do
+    #
+    #     before :each do
+    #       Solution.create!( account_id: current_account.id,
+    #                         assignment: assignment, comments: [],
+    #                         link: "http://zaraza.com/home")
+    #     end
+    #
+    #     it "should not allow students to upload a solution" do
+    #       post "/my/assignments/:assignment_id/solutions/create", params
+    #
+    #       last_response.should_not be_ok
+    #       last_response.body.should include "La fecha de entrega ha caducado"
+    #     end
+    #
+    #   end
+    # end
+
 end

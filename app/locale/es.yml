@@ -45,6 +45,7 @@ es:
       file_absent: 'Debe seleccionar archivo'
       link_absent: 'Debe especificar un link de entrega'
       deadline_passed: 'La fecha de entrega ha caducado'
+      deadline_passed_upload_anyway: 'Recordá que estás entregando fuera de fecha'
     form:
       file: 'Archivo a entregar'
       comments: 'Comentarios'

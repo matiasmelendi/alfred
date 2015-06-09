@@ -5,7 +5,7 @@ Alfred::App.controllers :my do
     return false unless solution_params.has_key?('file')
     true
   end
-  
+
   define_method :is_blocked_by_date? do |assignment|
     assignment.is_blocking && assignment.deadline < Date.today
   end
@@ -26,8 +26,15 @@ Alfred::App.controllers :my do
   end
 
   get :new_solution, :map => '/my/assignments/:assignment_id/solutions/new' do
+    errors = []
     @assignment = Assignment.get(params[:assignment_id])
     @solution = Solution.new( :account => current_account,:assignment => @assignment )
+    if is_blocked_by_date?(@assignment)
+      errors << t('solutions.errors.deadline_passed_upload_anyway')
+    end
+    unless errors.empty?
+      flash.now[:error] = errors
+    end
     render 'my/new_solution'
   end
 
@@ -42,21 +49,19 @@ Alfred::App.controllers :my do
     end
 
   end
-  
+
   post :create_solution, :map => '/my/assignments/:assignment_id/solutions/create' do
     errors = []
 
     @assignment = Assignment.get(params[:assignment_id])
     @solution= Solution.new( :account_id => current_account.id,
-            :assignment => @assignment, :comments => params[:solution][:comments],
-            :link => params[:solution][:link] )
-    if is_blocked_by_date?(@assignment)
-	  errors << t('solutions.errors.deadline_passed')
-	elsif @assignment.solution_type == Assignment.LINK
-	  if params[:solution][:link] == ''
-	    errors << t('solutions.errors.link_absent')
-	  else
-	    DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
+                             :assignment => @assignment, :comments => params[:solution][:comments],
+                             :link => params[:solution][:link] )
+    if @assignment.solution_type == Assignment.LINK
+      if params[:solution][:link] == ''
+        errors << t('solutions.errors.link_absent')
+      else
+        DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
           if not @solution.save
             errors << @solution.errors
           end
@@ -70,13 +75,13 @@ Alfred::App.controllers :my do
       DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
         if @solution.save
           @solution_generic_file = SolutionGenericFile.new( :solution => @solution,
-                :name => input_file[:filename] )
+                                                            :name => input_file[:filename] )
           errors << @solution_generic_file.errors if not @solution_generic_file.save
           begin
             storage_gateway = Storage::StorageGateways.get_gateway
             storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
           rescue Storage::FileUploadFailedError => e
-            errors << t('solutions.errors.upload_failed')
+            errors << t('solutions.errors.upload_failed') + e.to_s
           end
         else
           errors << @solution.errors

@@ -20,15 +20,30 @@ When /^I fill in link to solution$/ do
 end
 
 When(/^due date for "(.*?)" passes$/) do |assignment_name|
-  pending
+  assignment = Assignment.all.select{|assignment| assignment.name == assignment_name}.first
+  time = assignment.deadline + 10
+  Timecop.travel(time)
 end
 
 Then(/^student cannot submit a solution again for "(.*?)"$/) do |assignment_name|
-  pending
+  step 'I follow "Trabajos prácticos"'
+  within ("#tr#{assignment_name}") do
+    within("#td#{assignment_name}") do
+      expect(page).to_not have_link("Entregar solución")
+    end
+  end
 end
 
 Then(/^student can submit a solution for "(.*?)"$/) do |assignment_name|
-  pending
+  step "I click submit solution for \"#{assignment_name}\""
+  step 'I should see "Recordá que estás entregando fuera de fecha"'
+  step 'I fill in link to solution'
+  step 'I click save button'
+  step 'I should see "Solution creado exitosamente"'
+end
+
+Then(/^the solution for "(.*?)" is marked as "(.*?)"$/) do |assingment_name, solution_state|
+  pending # express the regexp above with the code you wish you had
 end
 
 Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
