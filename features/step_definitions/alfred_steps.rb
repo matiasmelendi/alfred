@@ -1,6 +1,8 @@
 #encoding: utf-8
 require 'uri'
 require 'cgi'
+require 'cucumber/rspec/doubles'
+
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 # Includes factories
 Dir.glob(File.dirname(__FILE__) + "/../../spec/support/**/factory_*.rb").each { |f| require f }
@@ -113,12 +115,26 @@ When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
-When /^I click "(.*?)"$/ do |button|
-  click_button button
+When /^I click "(.*?)"$/ do |button_or_link|
+  click_on button_or_link
 end
 
 Then /^I should get file "(.*)"$/ do |file_name|
   page.status_code.should be 200
   page.response_headers["Content-Type"].should == "application/zip"
   page.response_headers["Content-Disposition"].should include("filename=#{file_name}")
+end
+
+Then(/^there should be (\d+) karma points$/) do |points|
+  page.should have_content 'Karma: 1'
+end
+
+And(/^I should receive a reset password email after clicking "(.*?)"$/) do |link_or_button_name|
+  Alfred::App.should_receive(:deliver).with(:notification, :password_has_been_reset, "Richard@someplace.com", "123123123")
+
+  click_on link_or_button_name
+end
+
+And(/^I fill in password with the new one generated$/) do
+  fill_in "password", with: "123123123"
 end
