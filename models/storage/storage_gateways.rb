@@ -4,7 +4,7 @@ module Storage
 			if PADRINO_ENV=='development'
 				Storage::StubGateway.new
 			else
-				Storage::DropboxGateway.new
+				Storage::LocalGateway.new
 			end
 		end
 	end
