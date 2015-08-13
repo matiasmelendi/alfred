@@ -39,7 +39,7 @@ Alfred::App.mailer :notification do
     from "#{correction.teacher.full_name} <#{correction.teacher.email}>"
     to correction.solution.account.email
     bcc correction.teacher.email
-    subject '[FIUBA-ALGO] Correccion de trabajo practico'
+    subject '[OBJ-1] Correccion de trabajo practico'
     locals :correction => correction
     content_type :plain
     render 'notification/correction_result.text'
@@ -48,7 +48,7 @@ Alfred::App.mailer :notification do
 	email :solution_test_result do | solution |
     from "Alfred <#{ENV['MAIL_SUPPORT_ADDRESS']}>"
     to solution.account.email
-    subject '[FIUBA-ALGO] Resultado pruebas del trabajo practico'
+    subject '[OBJ-1] Resultado pruebas del trabajo practico'
     locals :solution => solution
     content_type :plain
     render 'notification/solution_test_result.text'
@@ -57,7 +57,7 @@ Alfred::App.mailer :notification do
   email :password_has_been_reset do |email, new_password|
     from "Alfred <#{ENV['MAIL_SUPPORT_ADDRESS']}>"
     to email
-    subject '[Alfred] Tu password ha sido restablecido'
+    subject '[OBJ-1] Tu password ha sido restablecido'
     locals new_password: new_password
     content_type :plain
     render 'notification/password_has_been_reset.text'
