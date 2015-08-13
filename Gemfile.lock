@@ -74,7 +74,7 @@ GEM
     do_sqlite3 (0.10.12)
       data_objects (= 0.10.12)
     dotenv (0.8.0)
-    dropbox-sdk (1.5.1)
+    dropbox-sdk (1.6.5)
       json
     erubis (2.7.0)
     eventmachine (1.0.0)
@@ -103,7 +103,7 @@ GEM
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
     i18n (0.7.0)
-    json (1.7.7)
+    json (1.8.3)
     listen (1.1.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
