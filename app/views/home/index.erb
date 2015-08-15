@@ -25,7 +25,7 @@
 <br>
 
 <div class="alert centered">
-Alfred está aún en construcción, si detectas algún error o tienes sugerencias, escríbenos a <a href="mailto:<%= ENV['MAIL_SUPPORT_ADDRESS'] %>"><%= ENV['MAIL_SUPPORT_ADDRESS'] %></a>.
+  Alfred está aún en construcción, si detectas algún error o tienes sugerencias, escríbenos a <%= mail_to ENV['MAIL_SUPPORT_ADDRESS'] %>.
 </div>
 
 <% unless current_account.is_enrolled?(Course.active) %>
