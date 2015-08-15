@@ -6,7 +6,7 @@
         <h1>Alfred</h1>
         <p class="lead"></p><br/>
           <span class="span3">
-            <img src="http://images2.wikia.nocookie.net/__cb20111112220836/batman/es/images/8/89/Alfred.jpg">
+            <%= image_tag "Alfred.jpg" %>
           </span>
           <span class="span6">
             <p>¡Bienvenido!</p>
@@ -36,5 +36,4 @@
       <%= link_to t(:here), :onclick => "$(this).closest('form').submit()", :href => "#"  %>
     <% end %>
   </div>
- <% end %>
-
+<% end %>
