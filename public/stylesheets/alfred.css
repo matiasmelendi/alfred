@@ -10,6 +10,18 @@ footer {
     text-align: right;
 }
 
+body {
+    background-color: #808080;
+}
+
+body div.well {
+    background-color: darkgrey;
+}
+
+hr.space {
+    background-color: transparent;
+    border-color: transparent;
+}
 .centered {
     text-align: center;
 }
@@ -107,4 +119,67 @@ button.assign-to-me:hover {
 
 .inline-text {
 	display:inline;
+}
+
+.navbar-inner {
+    background-color: grey;
+    background-image: none;
+    border: 1px solid grey;
+}
+
+.navbar .btn-navbar {
+    background-color: grey;
+    background-image: none;
+    border-color: slategrey;
+}
+
+.nav-tabs {
+    background-color: slategrey;
+    border-color: slategrey;
+}
+
+.nav-tabs .active{
+    background-color: slategrey;
+    border-color: slategrey;
+}
+
+.nav-tabs .active a {
+    color: lightgreen;
+}
+
+.nav-tabs a {
+    color: lightgreen;
+}
+
+.nav-tabs .active a:hover, a:focus{
+    background-color: grey;
+    color: lightgreen;
+}
+
+.nav-tabs a:hover, a:focus{
+    background-color: grey;
+    color: lightgreen;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    border-color: lightgreen lightgreen grey;
+    background-color: grey;
+}
+
+.nav-tabs > li {
+    border-color: lightgreen lightgreen grey;
+    background-color: grey;
+}
+
+.nav-tabs > li.active {
+    border-color: lightgreen lightgreen grey;
+    background-color: grey;
+}
+
+.btn .btn-primary{
+    background-color: darkseagreen;
+}
+
+h1, h2, h3 {
+    color: palegreen;
 }

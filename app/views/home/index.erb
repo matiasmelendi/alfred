@@ -4,9 +4,9 @@
     <div>
       <div class="well">
         <h1>Alfred</h1>
-        <p class="lead"></p><br/>
+
           <span class="span3">
-            <%= image_tag "Alfred.jpg" %>
+            <%= image_tag "Alfred.jpg", class: "img-circle" %>
           </span>
           <span class="span6">
             <p>¡Bienvenido!</p>
@@ -24,7 +24,7 @@
 
 <br>
 
-<div class="alert centered">
+<div class="alert alert-success centered">
   Alfred está aún en construcción, si detectas algún error o tienes sugerencias, escríbenos a <%= mail_to ENV['MAIL_SUPPORT_ADDRESS'] %>.
 </div>
 
