@@ -19,6 +19,8 @@ es:
   create_account: 'Crear cuenta'
   account_created: 'Cuenta creada'
   account_creation_error: 'No se pudo crear la cuenta'
+  account_updated_successfully: "Tu cuenta ha sido actualizada correctamente!"
+  account_could_not_be_updated: "Ha ocurrido un error y tu cuenta no pudo ser actualizada"
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
   back: 'atrás'

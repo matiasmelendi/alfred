@@ -120,10 +120,10 @@ Alfred::App.controllers :my do
 
     @account = current_account
     if @account.update(account_params)
-      flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
+      flash[:success] = t(:account_updated_successfully)
       redirect '/'
     else
-      flash.now[:error] = pat(:update_error, :model => 'account')
+      flash.now[:error] = t(:account_could_not_be_updated)
       render 'my/profile'
     end
   end
