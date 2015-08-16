@@ -10,10 +10,10 @@ Feature: Profile update
   	Given I am logged in as teacher
     When I go to "the profile page"
   	When I edit my profile with name "Juan" and lastname "perez" and tag "jt"
-    Then I should see "actualizado correctamente"
+    Then I should see "Tu cuenta ha sido actualizada correctamente!"
 
   Scenario: Password update
     Given I am logged in as teacher
     When I go to "the profile page"
     When I edit my profile with password "Password!" and password confirmation "Password!"
-    Then I should see "actualizado correctamente"
+    Then I should see "Tu cuenta ha sido actualizada correctamente!"
