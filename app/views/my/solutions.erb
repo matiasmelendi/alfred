@@ -5,7 +5,7 @@
   <li> <%= link_to tag_icon(:plus, pat(:new)), url(:my, :new, :solution, :assignment_id => @assignment.id) %></li>
 </ul>
 
-<table id="solutionsGrid" class="table table-bordered table-striped table-hover">
+<table id="solutionsGrid" class="table table-bordered table-striped gente">
 	<tr>
 		<th><%= t('solutions.grid.submission_date') %></th>
 		<% if @assignment.solution_type == 'file' %>
