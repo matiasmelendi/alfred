@@ -30,12 +30,12 @@ gem 'dm-core'
 gem 'dm-is-remixable'
 gem 'dm-ar-finders'
 gem 'dm-transactions'
-gem 'tilt', '1.4.1'
+gem 'tilt', '~> 1.3.0'
 gem 'dropbox-sdk', :require => 'dropbox_sdk'
 gem 'google-api-client', '0.9.pre3'
 
 # Padrino Stable Gem
-gem 'padrino', '0.11.4'
+gem "padrino", :git => "https://github.com/matiasmelendi/padrino-framework-0.11.1.git"
 
 group :production do
 	gem 'pg'
