@@ -8,7 +8,7 @@
 
 
 course = Course.new
-course.name = '2013-1'
+course.name = '2015-2'
 course.active = true
 course.save
 
@@ -44,7 +44,7 @@ matias = Account.new_teacher({:name => 'Matias',
                               :password => 'Passw0rd!',
                               :password_confirmation => 'Passw0rd!',
                               :buid => '04',
-                              :email => 'teacher2@test.com'})
+                              :email => 'm.f.melendi@gmail.com'})
 matias.courses << course
 matias.save
 
@@ -84,14 +84,6 @@ sol = Account.new_teacher({:name => 'Sol',
 sol.courses << course
 sol.save
 
-agustin = Account.new_teacher({:name => 'Agustin',
-                              :surname => 'Garcia Smith',
-                              :password => 'Passw0rd!',
-                              :password_confirmation => 'Passw0rd!',
-                              :buid => '09',
-                              :email => 'garciasmithagustin@gmail.com'})
-agustin.courses << course
-agustin.save
 
 caloventhor = Account.new_teacher({:name => 'Julian',
                               :surname => 'Calvento',
@@ -138,6 +130,15 @@ facundo = Account.new_teacher({:name => 'Facundo',
 facundo.courses << course
 facundo.save
 
+
+gabriel = Account.new_teacher({:name => 'Gabriel',
+                               :surname => 'Gonzalez',
+                               :password => 'Passw0rd!',
+                               :password_confirmation => 'Passw0rd!',
+                               :buid => '09',
+                               :email => 'gabrielnicolasgonzalez@gmail.com'})
+gabriel.courses << course
+gabriel.save
 
 =begin
 email     = shell.ask "Which email do you want use for logging into admin?"
