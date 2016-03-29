@@ -2,9 +2,9 @@ module Storage
 	module StorageGateways
 		def self.get_gateway
 			if PADRINO_ENV=='development'
-				Storage::StubGateway.new
+				Storage::GoogleDriveGateway.new
 			else
-				Storage::LocalGateway.new
+				Storage::DropboxGateway.new
 			end
 		end
 	end
