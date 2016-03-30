@@ -50,3 +50,11 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
 
 	task :default => [:all]
 end
+
+namespace :obj1_unq do
+  task :seed do
+    Dir[File.join(Padrino.root, 'db', 'seeds', '*.rb')].each do |filename|
+      load(filename) if File.exist?(filename)
+    end
+  end
+end
